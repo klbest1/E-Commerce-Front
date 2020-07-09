@@ -18,6 +18,8 @@
 		onLoad() {
             this.$http.carouselList({}).then(data => {
                  console.log("goods",data)
+             }).catch( error =>{
+                 console.log("error",error)
              })
 		},
 		methods: {

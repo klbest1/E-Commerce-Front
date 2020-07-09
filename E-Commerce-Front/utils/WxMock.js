@@ -9,15 +9,12 @@ wx.request =  function (config) {
         __request(config);
         return;
     }
-    // debugger
     var resTemplate = Mock._mocked[config.url].template;
     var response = Mock.mock(resTemplate);
-
     if (typeof config.success == 'function') {
         config.success(response)
     }
     if (typeof config.complete == 'function') {
-      
         config.complete(response)
     }
 };

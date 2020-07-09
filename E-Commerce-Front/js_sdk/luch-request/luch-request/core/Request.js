@@ -68,7 +68,6 @@ export default class Request {
     while (chain.length) {
       promise = promise.then(chain.shift(), chain.shift())
     }
-
     return promise
   }
 

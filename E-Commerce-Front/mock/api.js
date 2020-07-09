@@ -5,7 +5,7 @@ var Mock = require("@/utils/WxMock.js");
 const baseURL = config.httpBaseURL;
 
 Mock.mock( baseURL + 'carouselList',{
-        "code":200,
+        "statusCode":200,
         "data":[{
 		src: "/static/temp/banner3.jpg",
 		background: "rgb(203, 87, 60)",
@@ -22,7 +22,7 @@ Mock.mock( baseURL + 'carouselList',{
  })
  
   Mock.mock('https://xxx.com/user/delete',{
-         "code":200,
+         "statusCode":200,
          "message":"s删除成功"
   })
   

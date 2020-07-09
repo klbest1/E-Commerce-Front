@@ -26,6 +26,7 @@ export default (config) => {
         response.config = config
         try {
           // 对可能字符串不是json 的情况容错
+       
           if (typeof response.data === 'string') {
             response.data = JSON.parse(response.data)
           }
