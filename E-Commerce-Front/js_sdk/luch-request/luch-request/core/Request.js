@@ -56,15 +56,23 @@ export default class Request {
     config = mergeConfig(this.config, config)
     let chain = [dispatchRequest, undefined]
     let promise = Promise.resolve(config)
-
+    
+    //请求的promise放在最前面，对请求进行拦截
     this.interceptors.request.forEach(function unshiftRequestInterceptors(interceptor) {
       chain.unshift(interceptor.fulfilled, interceptor.rejected)
     })
 
+    //返回的response放在最后，对response进行处理
     this.interceptors.response.forEach(function pushResponseInterceptors(interceptor) {
       chain.push(interceptor.fulfilled, interceptor.rejected)
     })
 
+    /**
+     * 第一个then方法指定的回调函数，返回的是另一个Promise对象。
+     * 这时，第二个then方法指定的回调函数，就会等待这个新的Promise对象状态发生变化。
+     * 如果变为resolved，就调用第一个回调函数，如果状态变为rejected，
+     * 就调用第二个回调函数
+     * **/
     while (chain.length) {
       promise = promise.then(chain.shift(), chain.shift())
     }

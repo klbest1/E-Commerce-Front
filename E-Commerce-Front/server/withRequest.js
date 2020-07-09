@@ -1,8 +1,11 @@
 import Request from '@/js_sdk/luch-request/luch-request/index.js'
 import config from '@/config/serverConfig.js'
+import {HTTPInterceptors} from './interceptor.js'
 
-const http = new Request();
+export const http = new Request();
 http.config.baseURL = config.httpBaseURL
+const httpIntercept = new HTTPInterceptors(http)
+
 const requestMethods = {
     post:function(url){
         return async function postRequest(param){
