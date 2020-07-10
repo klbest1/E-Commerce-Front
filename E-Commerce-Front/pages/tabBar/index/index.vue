@@ -1,57 +1,79 @@
 <template>
-	<view class="content">
-		<image class="logo" src="/static/logo.png"></image>
-		<view class="text-area">
-			<text class="title">{{title}}首页</text>
-		</view>
-	</view>
+    <view class="content">
+        <view class="top-banner">
+            <view class="top-banner-bg" :style="{backgroundColor:topBgColor}">
+            </view>
+            <swiper class="swiper" :indicator-dots="true" :autoplay="false" :interval="3000" :duration="1000">
+                <swiper-item class="swiper-item" v-for="(item, index) in images" :key="index">
+                    <view class="swiper-item-content">
+                        <image class="swiper-item-content-image" :src="item.src" mode="" />
+                    </view>
+                </swiper-item>
+            </swiper>
+        </view>
+
+    </view>
 </template>
 
 <script>
-    
-	export default {
-		data() {
-			return {
-				title: 'Hello'
-			}
-		},
-		onLoad() {
+    export default {
+        data() {
+            return {
+                images: {},
+                topBgColor: ""
+            }
+        },
+        onLoad() {
             this.$http.carouselList({}).then(data => {
-                 console.log("goods",data)
-             }).catch( error =>{
-                 console.log("error",error)
-             })
-		},
-		methods: {
+                console.log('data', data)
+                this.images = data.data
+                this.topBgColor = data.data[0].background
+            }).catch(error => {})
+        },
+        methods: {
 
-		}
-	}
+        }
+    }
 </script>
 
-<style>
-	.content {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-	}
+<style lang="scss">
+    page {
+        display: flex;
+        flex-direction: column;
 
-	.logo {
-		height: 200rpx;
-		width: 200rpx;
-		margin-top: 200rpx;
-		margin-left: auto;
-		margin-right: auto;
-		margin-bottom: 50rpx;
-	}
+    }
 
-	.text-area {
-		display: flex;
-		justify-content: center;
-	}
 
-	.title {
-		font-size: 36rpx;
-		color: #8f8f94;
-	}
+    .top-banner {
+        position: relative;
+        .top-banner-bg {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 20px;
+            top: 0;
+            background-color: red($color: #000000);
+        }
+
+    }
+
+    .swiper {
+        margin-left: 5%;
+        padding-top: 60px;
+        width: 90%;
+        height: 200px;
+
+        &-item {
+            &-content {
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                &-image {
+                   width: 100%;
+                   height: 100%; 
+                }
+            }
+
+        }
+    }
 </style>
